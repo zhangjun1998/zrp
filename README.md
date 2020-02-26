@@ -112,9 +112,9 @@ config:
 ```
 下面这两张图是ssh和mysql连接的测试：
 
-![ssh截图](https://github.com/zhangjun1998/zrp/raw/master/images/architecture.png)
+![ssh截图](https://github.com/zhangjun1998/zrp/raw/master/images/mysql.png)
 
-![mysql截图](https://github.com/zhangjun1998/zrp/raw/master/images/architecture.png)
+![mysql截图](https://github.com/zhangjun1998/zrp/raw/master/images/ssh.png)
 
 <h2 id="plan">五、计划</h2>
 
