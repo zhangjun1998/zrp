@@ -38,7 +38,7 @@ zrp是使用Java开发的一款基于netty的内网穿透工具，主要用于�
 <h2 id="architecture">三、架构</h2>
 内网穿透流程基本都差不多，下图是一个简略的描述。
 
-![zrp架构](https://github.com/zhangjun1998/zrp/raw/master/images/architecture.png)
+![zrp架构](http://github.com/zhangjun1998/zrp/raw/master/images/architecture.png)
 
 <h2 id="run">四、运行</h2>
 想要运行zrp很简单，只需要提供好zrp的配置文件即可。代理服务器与代理客户端的配置文件命名都是proxy-config.yaml。
@@ -112,8 +112,8 @@ config:
 ```
 下面这两张图是ssh和mysql连接的测试：
 
-![ssh截图](https://github.com/zhangjun1998/zrp/blob/master/images/ssh.png)
-![mysql截图](https://github.com/zhangjun1998/zrp/blob/master/images/mysql.png)
+![ssh截图](http://github.com/zhangjun1998/zrp/raw/master/images/ssh.png)
+![mysql截图](http://github.com/zhangjun1998/zrp/raw/master/images/mysql.png)
 
 <h2 id="plan">五、计划</h2>
 
