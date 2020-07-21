@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjcoding.zrpserver.web.dao.AdminDao">
+
+    <!--登录-->
+    <select id="login" resultType="com.zjcoding.zrpserver.web.entity.Admin">
+        select
+            id,username,password
+        from
+            admin
+        where
+            username = #{username}
+        and
+            password = #{password}
+    </select>
+
+    <!--修改密码-->
+    <update id="changePass">
+        update ignore
+            admin
+        set
+            password = #{newPass}
+        where
+            username = #{username}
+        and
+            password = #{oldPass}
+    </update>
+
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjcoding.zrpserver.web.dao.LogDao">
+
+    <!--按时间、端口、授权码归类查询日志-->
+    <select id="getLogs" resultType="com.zjcoding.zrpserver.web.entity.Log">
+        select
+            client_key as clientKey,
+            (select client.name from client where log.client_key = client.client_key) as clientName,
+            port,sum(flow) as flow,date
+        from
+            log
+        group by
+            client_key,date,port
+        order by
+            log.date
+        desc ;
+    </select>
+
+    <!--插入日志-->
+    <insert id="addLog">
+        insert into
+            log(client_key, port, flow, date)
+        values(#{clientKey},#{port} ,#{flow} ,CURRENT_DATE())
+    </insert>
+
+</mapper>

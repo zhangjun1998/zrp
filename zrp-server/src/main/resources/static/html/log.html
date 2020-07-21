@@ -1,0 +1,93 @@
+<!--
+@Description 
+@Author zhangjun
+@Data 2020/4/13
+@Time 17:11
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>日志模块</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+<div class="container" id="container">
+    <!--<table class="table table-hover">-->
+    <!--<tr>-->
+    <!--<th>客户名</th>-->
+    <!--<th>授权码</th>-->
+    <!--<th>端口</th>-->
+    <!--<th>流量</th>-->
+    <!--<th>日期</th>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>张三</td>-->
+    <!--<td>ddhaksak121</td>-->
+    <!--<td>9980</td>-->
+    <!--<td>12.3 M</td>-->
+    <!--<td>2020-02-18</td>-->
+    <!--</tr>-->
+    <!--</table>-->
+</div>
+</body>
+<script>
+    function getLogs() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://localhost:8888/api/log/get", true);
+        xhr.send();
+        xhr.onreadystatechange = function (ev) {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var logs = JSON.parse(xhr.response);
+                //创建节点，填充数据
+                var container = document.body;
+                var table = document.createElement("table");
+                table.classList.add("table", "table-hover");
+                var tbody = document.createElement("tbody");
+                var titleTr = document.createElement("tr");
+                var nameTh = document.createElement("th");
+                var clientKeyTh = document.createElement("th");
+                var portTh = document.createElement("th");
+                var flowTh = document.createElement("th");
+                var dateTh = document.createElement("th");
+                nameTh.innerText = "用户";
+                clientKeyTh.innerText = "授权码";
+                portTh.innerText = "流量端口";
+                flowTh.innerText = "当日流量总计/M";
+                dateTh.innerText = "日期";
+                titleTr.appendChild(nameTh);
+                titleTr.appendChild(clientKeyTh);
+                titleTr.appendChild(portTh);
+                titleTr.appendChild(flowTh);
+                titleTr.appendChild(dateTh);
+                tbody.appendChild(titleTr);
+                for (var i = 0; i < logs.length; i++) {
+                    var logTr = document.createElement("tr");
+                    var nameTd = document.createElement("td");
+                    var clientKeyTd = document.createElement("td");
+                    var portTd = document.createElement("td");
+                    var flowTd = document.createElement("td");
+                    var dateTd = document.createElement("td");
+                    nameTd.innerText = logs[i].clientName;
+                    clientKeyTd.innerText = logs[i].clientKey;
+                    portTd.innerText = logs[i].port;
+                    flowTd.innerText = (logs[i].flow / 1024).toFixed(2);
+                    dateTd.innerText = logs[i].date;
+                    logTr.appendChild(nameTd);
+                    logTr.appendChild(clientKeyTd);
+                    logTr.appendChild(portTd);
+                    logTr.appendChild(flowTd);
+                    logTr.appendChild(dateTd);
+                    tbody.appendChild(logTr);
+                }
+                table.appendChild(tbody);
+                container.appendChild(table);
+            }
+        }
+    }
+
+    getLogs();
+
+</script>
+</html>

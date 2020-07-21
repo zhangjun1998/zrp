@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjcoding.zrpserver.web.dao.ClientDao">
+
+    <!--添加客户-->
+    <insert id="addClient" parameterType="com.zjcoding.zrpserver.web.entity.Client">
+        insert ignore into
+            client(
+            name,client_key,status,start_time,stop_time,comment
+            )
+        values(
+            #{client.name},
+            #{client.clientKey},
+            '已授权',
+            now(),
+            #{client.stopTime},
+            #{client.comment}
+        )
+    </insert>
+
+    <!--删除客户-->
+    <delete id="deleteClient">
+        delete from
+            client
+        where
+            id = #{id}
+    </delete>
+
+    <!--获取所有客户-->
+    <select id="getClients" resultType="com.zjcoding.zrpserver.web.entity.Client">
+        select
+            id,name,client_key as ClientKey,
+            (select sum(flow) from log where client.client_key = log.client_key) as flow,
+            status,start_time as startTime,stop_time as stopTime,comment
+        from
+            client
+    </select>
+
+    <!--授权判断-->
+    <select id="checkClientKey" resultType="com.zjcoding.zrpserver.web.entity.Client">
+        select
+            id,name,client_key,status,start_time,stop_time,comment
+        from
+            client
+        where
+            client_key = #{clientKey}
+    </select>
+
+
+</mapper>
