@@ -1,125 +1,161 @@
+# zrp
+
+![Hex.pm](https://img.shields.io/hexpm/l/ok)
+![Maven Central](https://img.shields.io/badge/maven-3.6.0-blue.svg)
+![](https://img.shields.io/badge/Java-1.8-green.svg)
+![](https://img.shields.io/badge/zrp-0.0.2-yellow.svg)
+
+zrp 是使用Java开发的一款基于netty的内网穿透工具，主要用于将内网服务反向代理到公网访问。目前支持所有TCP上层协议的代理，包括但不限于HTTP、SSH、FTP、TELNET、SMTP、POP3、DNS等。
+
 ## 目录
-- [简介](#introduction)
-- [功能](#function)
-- [架构](#architecture)
-- [运行](#run)
-- [计划](#plan)
 
+* [开发背景](#开发背景)
+* [基本原理](#架构)
+* [功能说明](#功能说明)
+* [使用示例](#使用示例)
+    * [通过 ssh 访问公司内网机器](#通过-ssh-访问公司内网机器)
+    * [通过自定义域名访问部署于内网的 web 服务](#通过自定义域名访问部署于内网的-web-服务)
+* [Todo](#Todo)
+* [联系我](#联系我)
+* [鸣谢](#鸣谢)
+* [License](#License)
 
-<h2 id="introduction">一、简介</h2>
+## 开发背景
 
-zrp是使用Java开发的一款基于netty的内网穿透工具，主要用于将内网客户端反向代理到公网访问。目前支持所有tcp上层协议的代理，包括但不限于http、ssh、ftp等。
+这是一个漫长的故事，如果不想看就跳过吧......。
 
-最初的开发目的是由于阿里云内存和CPU有限不方便部署一些个人项目，由于学校宽带运营商动态公网IP也不会给所以我写的DDNS也没有发挥用处。
-观察市面上的一些反向代理应用后学习了反向代理技术的一些原理，本着挖掘技术和实际应用的想法开发了运用不同技术的代理工具。
+用官话讲就是由于xx问题，产生xx现象，导致普罗大众都没办法xxx，因此xx技术应运而生。
 
-<b>下面是我故意做的几个不同版本用来学习的，写了一些感受，和本项目使用无实际关系，可以跳过。</b>
+以上这些在我开发完之前对我来说都是扯淡，事实上我一开始没有想做一个内网穿透工具的想法，在大三上学期(2018年)的时候我已经能够做出一些自以为很有意思的东西(实际上是些垃圾)，然而没有办法让更多人看到就少了一些成就感，所以我就开始准备白嫖，从NATAPP嫖到向日葵，最后打电话想嫖运营商的公网IP，也许是我当时的白嫖技术不行，导致本地服务在网络上嫖到失联。
 
-**1.第一版**  
-这个是为了加深对Http协议和Socket的使用而做的，只针对Http设计，不直接转发tcp流量，而是解析Http请求，重组后通过socket转发到内网，内网再返回响应。这种方式的缺点是灵活性太差，而且效率低下，创建的线程比较多，而且频繁的线程切换也会带来很多开销，由于BIO是阻塞的，虽然有线程池，但作用不是很大。优点是可以帮我了解Http协议和Socket的使用，因为我想实际对比一下BIO和NIO的区别，而不是只通过几个demo和网上的文字比较。
+不得已我掏出了大招，在当时一年前用学生价嫖到的阿里云服务器，1核2G+40G磁盘，部署我的一些垃圾玩具够用了。但还是很不爽，每次开发完打包部署真特么麻烦，直接本地开服务访问多舒服，而且我还想搞一波远程桌面等其它有意思的东西，阿里云用起来还是差了点意思。
 
-**2.第二版**  
-第二版本来是准备直接使用netty的，不过感觉对NIO了解的不够深刻，而且对netty也不怎么了解。就准备通过学习Java NIO的方式去了解netty的一些原理，因此直接使用了Java NIO对第一版进行了重构，也不再只针对Http协议，而是直接转发TCP流量。Java NIO开始用起来不如BIO直观简单，但是熟悉后可以更加有效的去设计，这种事件驱动型的非阻塞IO模型在这种面对大量短连接的情况下发挥的非常出色，天生适用于高负载、高并发。而且NIO是面向缓冲区的，直接将数据读到缓冲区中操作，而BIO虽然也有Buffer这种包装类，但是本质上也还是流的包装类，需要从流读到缓冲区。
+后来我知道运营商给我们的宽带有一些竟然是有动态公网IP的，我就做了一个DDNS工具，配上我在阿里注册的域名，万事俱备，就差一个动态公网IP了，测了一下家里、学校的宽带竟然都没有？？？懵了，卒。
 
-**3.第三版**  
-第三版就是使用netty了，因为在第二版中我尝试了把一些东西给抽象出来封装成一个简单易用的小框架，实际操作的时候发现自己还是太嫩了。因此开始看netty的官方文档和github上的一些小demo，简单写了几个，感觉有点知其然不知其所以然，花两天读了《netty实战》这本书，基本明白了netty的思路和一些核心组件。然后借鉴了一些开源项目自己写了个内网穿透工具zrp。
+再后面读大四又参加了互联网+竞赛，做的是一个物联网项目，不过当时没有那么多时间去考虑就直接用了阿里的物联网平台，后来我了解到Ngrok、frp，恰好我的阿里云还在续费，理所当然我就...没有用这两个软件，因为我看了一下它们实现内网穿透的原理，感觉问题不大，自己干一个。后面就是去全球最大同性交友网站找了一下frp的源码，发现是Go写的，当时我就想一定要用Java写一个，等有空了我学一下Go再写一个。然后又扒了lanproxy的源码，最后就写了这个frp的十八线山寨版zrp。
 
-<h2 id="function">二、功能</h2>
-功能基本都是基于TCP的，支持TCP上层协议。大概使用场景有下面几个：
-<br/>
+最后就是顺便用zrp当作了师生合作类型的毕业设计题目，第一次碰到毕业设计指导老师会给学生钱，师生一起商量怎么才能避免评上优秀毕业设计，虽然最后还是没有成功逃掉，但是回头想想也没有我想象的那么麻烦，再次给那位李姓指导老师致谢，师傅领进门，修行靠自身。
 
-- 内网web服务
-- 内网ssh服务
-- 内网ftp服务
-- 内网数据库服务
-- 远程桌面
-- ...
+## 基本原理
 
-<h2 id="architecture">三、架构</h2>
-内网穿透流程基本都差不多，下图是一个简略的描述。
+基本原理就很简单了，两个字就懂了，转发。看下面这个图吧，想深入了解细节处理建议看一下frp的源码，千万不要看我的代码，会误人子弟。
 
-![zrp架构](https://github.com/zhangjun1998/zrp/raw/master/images/architecture.png)
+![基本原理](https://github.com/zhangjun1998/zrp/raw/master/images/architecture.png)
 
-<h2 id="run">四、运行</h2>
-想要运行zrp很简单，只需要提供好zrp的配置文件即可。代理服务器与代理客户端的配置文件命名都是proxy-config.yaml。
+## 功能说明
 
-下面是一个基本的代理服务器配置：
+目前来说zrp本身没有什么附加功能，只是做了内网穿透，在文末Todo里面会列出zrp后面会做出的修改与完善。下面是可以使用zrp做的一些事情：
++ 内网web服务
++ 使用FTP、SSH等远程连接内网计算机
++ windows远程桌面
++ ......任意不违反法律的操作
+
+## 使用示例
+
+### 下载
+
+1. 代理服务器端zrp-server：根据源码自行打包
+2. 代理客户端zrp-client下载：[zrp-client](https://github.com/zhangjun1998/zrp/releases/download/0.0.2/zrp-client.jar)
+
+### 运行配置
+
+1. 代理服务器配置文件：[zrp-server.yaml](https://github.com/zhangjun1998/zrp/blob/master/zrp-server.yaml)
 ```
-# 已授权客户端client-key
-clients:
-  - kas19kn#fkhDKAsadhk
-  - KAHSKKASdhkajsk211a
-  - jas#HFKfkkhakkdajdL
+# 代理服务器配置
+
+# host
+server-host: 0.0.0.0
+
+# 代理服务器数据传输port
+server-port: 10987
 ```
-下面是代理客户端配置：
+
+2. 初始化数据库
+
+[下载sql]("")
+
+3. 代理客户端配置文件：[zrp-client.yaml](https://github.com/zhangjun1998/zrp/blob/master/zrp-client.yaml)
 ```
 # 代理客户端配置
-# 
-# 代理服务器host(我这里直接用localhost做的测试，后面会重测)
-server-host: xx.xx.xx.xx
-# 代理服务器数据传输port
-server-port: 8888
+
+# 代理服务器host
+server-host: 这里填你代理服务器的公网IP
+
+# 代理服务器数据传输port，需要与zrp-server.yaml配置一致
+server-port: 10987
+
 # 本地服务器host
 local-host: 127.0.0.1
+
 # 代理客户端认证密钥client-key
-client-key: kas19kn#fkhDKAsadhk
+client-key: your key
+
 # server-port与local-port映射配置
 config:
   # server-port：代理服务器外部访问端口
   # client-port：代理客户端实际使用端口
-  # proxy-type： 采用的代理模式，目前只支持tcp
+  # proxy-type： 采用的代理模式
+  # description：代理描述
   #
-  # 3306端口，一般是mysql代理
-  - server-port: 9906
-    client-port: 3306
-    proxy-type: tcp
-  #
-  # 8080端口，一般是http代理
-  # 这里也直接转发tcp流量，速度会较快
   - server-port: 9980
     client-port: 8080
     proxy-type: tcp
+    description: http代理
   #
-  # 22端口，一般是ssh代理
   - server-port: 9922
     client-port: 22
     proxy-type: tcp
+    description: ssh代理
   #
-  # 21端口，一般是ftp代理
   - server-port: 9921
     client-port: 21
     proxy-type: tcp
+    description: ftp代理
+  #
+  - server-port: 9989
+    client-port: 3389
+    proxy-type: tcp
+    description: 远程桌面代理
 ```
-配置完成后运行SererRun和ClientRun即可。
 
-成功运行后会看到类似下面的一些提示信息：  
-代理服务器：
+### 运行
+1. zrp-server运行
 ```
-有客户端建立连接，客户端地址为：/127.0.0.1:64839
-客户端注册成功，clientKey为：kas19kn#fkhDKAsadhk
-9922端口有请求进入，channelId为：00155dfffe890110-00001e0c-00000006-01807925852f9261-84d0470f
-9922端口收到请求数据，数据量为28字节
-收到客户端返回数据，数据量为33字节
+# 打包zrp-server源码为jar文件
+# 将zrp-server.yaml与zrp-server.jar放在同级目录
+# 运行以下命令(需配置好Java环境)
+java -jar zrp-server.jar
 ```
-代理客户端：
+2. zrp-client运行
 ```
-与服务器连接建立成功，正在进行注册...
-注册成功
-服务器9922端口进入连接，正在向本地22端口建立连接
-与本地端口建立连接成功：/127.0.0.1:22
-收到服务器数据，数据量为28字节
-收到本地/127.0.0.1:22的数据，数据量为33字节
+# 进入zrp-client所在目录
+# 将zrp-client.yaml与zrp-client放在同级目录
+# 运行以下命令
+java -jar zrp-client.jar
 ```
-下面这两张图是ssh和mysql连接的测试：
 
-![ssh截图](https://github.com/zhangjun1998/zrp/raw/master/images/mysql.png)
+## Todo
 
-![mysql截图](https://github.com/zhangjun1998/zrp/raw/master/images/ssh.png)
+- [x] 管理员仪表盘，在线管理代理客户端
+- [ ] 数据压缩，节约带宽，但会增大CPU负载
+- [ ] 端口复用，允许不同协议使用同一端口
+- [ ] TCP多路复用，减少TCP连接数
 
-<h2 id="plan">五、计划</h2>
+## 联系我
 
-- [ ] 实现对Https的支持，方便调试微信小程序。
-- [ ] 开发一个仪表盘，方便在线管理。
-- [ ] 数据压缩，我的阿里云带宽小，减少传输的数据量。
-- [ ] 使用redis在代理服务器上缓存一些静态web资源，减少重复请求。
-- [ ] 负载均衡。
++ 邮箱：zhangjun_java@163.com
++ 微信：rzy_zj
++ Github提issue
+
+## 致谢
+
++ <span style="color:#03a9f4">我亲爱的女朋友<span/>
++ <span style="color:#03a9f4">我的大学老师李某<span/>
++ [frp](https://github.com/fatedier/frp)
++ [lanproxy](https://github.com/ffay/lanproxy)
+
+## License
+
+![Hex.pm](https://img.shields.io/hexpm/l/ok)
+
+未经允许，请勿以任何方式以此牟利。
