@@ -141,7 +141,7 @@ java -jar zrp-client.jar
 
 2. ssh连接内网计算机
 
-![ssh连接演示](https://github.com/zhangjun1998/zrp/blob/master/images/ssh.png)
+![ssh连接演示](https://github.com/zhangjun1998/zrp/raw/master/images/ssh.png)
 
 ## 计划
 
