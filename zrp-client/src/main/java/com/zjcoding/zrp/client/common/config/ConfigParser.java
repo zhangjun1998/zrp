@@ -26,7 +26,7 @@ public class ConfigParser {
             //定位当前文件夹路径(zrp)
             String dir = System.getProperty("user.dir");
             // 获取配置
-            File file = new File(dir+File.separator+"proxy-config.yaml");
+            File file = new File(dir+File.separator+"zrp-client.yaml");
             InputStream in = new FileInputStream(file);
             Yaml yaml = new Yaml();
             config = (Map<String,Object>) yaml.load(in);

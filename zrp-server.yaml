@@ -1,0 +1,7 @@
+# 代理服务器配置
+
+# host
+server-host: 0.0.0.0
+
+# 代理服务器数据传输port
+server-port: 9876

@@ -1,57 +1,12 @@
-<!--
-@Description 
-@Author zhangjun
-@Data 2020/4/13
-@Time 17:01
--->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>首页</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <style>
-        .iframeContainer {
-            width: 100%;
-            height: 580px;
-        }
+/**
+ * @Description
+ * @Author zhangjun
+ * @Data 2020/7/24
+ * @Time 17:06
+ * */
 
-        iframe {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <span class="navbar-brand">ZRP</span>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="changePage" id="client">
-                        <a href="#">用户模块</a>
-                    </li>
-                    <li class="changePage" id="log">
-                        <a href="#">日志模块</a>
-                    </li>
-                    <li class="active changePage" id="admin">
-                        <a href="#">管理模块</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="iframeContainer">
-        <iframe id="pageChoice" frameborder="0" scrolling="yes" src="login.html"></iframe>
-    </div>
-</div>
+window.onload=function () {
 
-</body>
-<script type="application/javascript">
 
     //全局用户名
     var usernameGlobal = null;
@@ -70,7 +25,7 @@
         var iframe = document.getElementById("pageChoice");
         var current = e.currentTarget;
         cancelActive(current);
-        iframe.src = current.id + ".html";
+        iframe.src = current.id;
     }
 
     //绑定点击导航栏切换iframe页面事件
@@ -84,19 +39,19 @@
     //检查登录状态
     function checkLogin() {
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://localhost:8888/api/admin/isLogin", false);
+        xhr.open("GET", "/api/admin/isLogin", false);
         xhr.send();
         if (xhr.readyState === 4 && xhr.status === 200) {
             var user = xhr.responseText;
             if (user !== "null") {  //已经登录
                 usernameGlobal = user;
                 //展示管理模块
-                document.getElementById("pageChoice").src = "admin.html";
+                document.getElementById("pageChoice").src = "admin";
                 //允许点击切换模块
                 bindChangePage();
             } else {  //没有登录
                 //展示登录模块
-                document.getElementById("pageChoice").src = "login.html";
+                document.getElementById("pageChoice").src = "login";
             }
         }
     }
@@ -129,5 +84,4 @@
     }
     getDay(30);
 
-</script>
-</html>
+}

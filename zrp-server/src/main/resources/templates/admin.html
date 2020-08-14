@@ -1,0 +1,48 @@
+<!--
+@Description 
+@Author zhangjun
+@Data 2020/4/13
+@Time 17:10
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理模块</title>
+    <link rel="stylesheet" href="/css/admin.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+</head>
+<body>
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <div class="form-horizontal">
+                    <span class="heading" id="adminName"></span>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="oldPassword" placeholder="原密码">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="form-group help">
+                        <input type="password" class="form-control" id="newPassword" placeholder="新密码">
+                        <i class="fa fa-lock"></i>
+                        <a href="#" class="fa fa-question-circle"></a>
+                    </div>
+                    <div class="form-group help">
+                        <input type="password" class="form-control" id="repeatPassword" placeholder="确认密码">
+                        <i class="fa fa-lock"></i>
+                        <a href="#" class="fa fa-question-circle"></a>
+                    </div>
+                    <div class="form-group">
+                        <span class="text" id="placeHolder"></span>
+                        <button class="btn btn-default" id="changeBtn">修改密码</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="application/javascript" rel="script" src="/js/admin.js"></script>
+</html>

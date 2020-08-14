@@ -1,47 +1,45 @@
-# 代理服务器配置(为了测试方便这里暂时把服务器配置写在客户端配置里)
-# 已授权客户端key
-clients:
-  - kas19kn#fkhDKAsadhk
-  - KAHSKKASdhkajsk211a
-  - jas#HFKfkkhakkdajdL
-
 # 代理客户端配置
-# 代理服务器host
-server-host: 127.0.0.1
-# 代理服务器数据传输port
-server-port: 8888
-# 本地服务器host
+
+# 代理服务器IP
+server-host: your IP
+
+# 代理服务器数据传输端口
+server-port: 9876
+
+# 代理客户端host
 local-host: 127.0.0.1
+
 # 代理客户端认证密钥client-key
-client-key: kas19kn#fkhDKAsadhk
+client-key: your client-key
+
 # server-port与local-port映射配置
 config:
   # server-port：代理服务器外部访问端口
   # client-port：代理客户端实际使用端口
   # proxy-type： 采用的代理模式
   # description：代理描述
-  #
-  # 代理类型为tcp代理，直接转发流量，不解析包
+  # 
   - server-port: 9906
     client-port: 3306
     proxy-type: tcp
     description: mysql代理
   #
-  # http代理
-  # 这里也直接转发tcp流量，速度会较快
   - server-port: 9980
     client-port: 8080
     proxy-type: tcp
     description: http代理
   #
-  # ssh代理
   - server-port: 9922
     client-port: 22
     proxy-type: tcp
     description: ssh代理
   #
-  # ftp代理
   - server-port: 9921
     client-port: 21
     proxy-type: tcp
     description: ftp代理
+  #
+  - server-port: 9989
+    client-port: 3389
+    proxy-type: tcp
+    description: 远程桌面代理

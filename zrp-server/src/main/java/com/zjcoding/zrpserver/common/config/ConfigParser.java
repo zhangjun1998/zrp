@@ -1,5 +1,6 @@
 package com.zjcoding.zrpserver.common.config;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 import org.yaml.snakeyaml.Yaml;
 
@@ -24,9 +25,17 @@ public class ConfigParser {
 
     public ConfigParser() {
         try {
-            //定位当前文件夹路径(zrp)
-            File file = ResourceUtils.getFile("classpath:config/proxy-config.yaml");
-            InputStream in = new FileInputStream(file);
+            InputStream in;
+
+            //在IDE启动获取配置文件
+            //File file = ResourceUtils.getFile("classpath:config/zrp-server.yaml");
+            //in = new FileInputStream(file);
+
+            // 获取外部配置文件
+            String dir = System.getProperty("user.dir");
+            File file = new File(dir+File.separator+"zrp-server.yaml");
+            in = new FileInputStream(file);
+
             Yaml yaml = new Yaml();
             config = (Map<String,Object>) yaml.load(in);
             portArr = (ArrayList<Map<String, Object>>) get("config");

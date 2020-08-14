@@ -30,9 +30,9 @@ public class ServerBootStrapHelper {
                     .childHandler(channelInitializer)
                     .childOption(ChannelOption.SO_KEEPALIVE,true);
                     //连接超时时间，连接公网服务器时可能会超时导致连接失败，最好不要设置
-//                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS,10000);
+                    //.option(ChannelOption.CONNECT_TIMEOUT_MILLIS,10000);
             Channel channel = serverBootstrap.bind(serverHost,serverPort).sync().channel();
-//            Channel channel = serverBootstrap.bind(serverHost,serverPort).awaitUninterruptibly().channel();
+            //Channel channel = serverBootstrap.bind(serverHost,serverPort).awaitUninterruptibly().channel();
             channel.closeFuture().addListener((ChannelFutureListener) future ->{
                 //channel关闭，将channel从workerGroup取消注册
                 channel.deregister();

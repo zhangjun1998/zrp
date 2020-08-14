@@ -1,41 +1,15 @@
-<!--
-@Description 
-@Author zhangjun
-@Data 2020/4/13
-@Time 17:11
--->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>日志模块</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-</head>
-<body>
-<div class="container" id="container">
-    <!--<table class="table table-hover">-->
-    <!--<tr>-->
-    <!--<th>客户名</th>-->
-    <!--<th>授权码</th>-->
-    <!--<th>端口</th>-->
-    <!--<th>流量</th>-->
-    <!--<th>日期</th>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td>张三</td>-->
-    <!--<td>ddhaksak121</td>-->
-    <!--<td>9980</td>-->
-    <!--<td>12.3 M</td>-->
-    <!--<td>2020-02-18</td>-->
-    <!--</tr>-->
-    <!--</table>-->
-</div>
-</body>
-<script>
+/**
+ * @Description
+ * @Author zhangjun
+ * @Data 2020/7/24
+ * @Time 17:07
+ * */
+
+window.onload=function () {
+
     function getLogs() {
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://localhost:8888/api/log/get", true);
+        xhr.open("GET", "/api/log/get", true);
         xhr.send();
         xhr.onreadystatechange = function (ev) {
             if (xhr.readyState === 4 && xhr.status === 200) {
@@ -89,5 +63,4 @@
 
     getLogs();
 
-</script>
-</html>
+}

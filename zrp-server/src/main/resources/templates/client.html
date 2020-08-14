@@ -1,0 +1,83 @@
+<!--
+@Description 
+@Author zhangjun
+@Data 2020/4/13
+@Time 17:08
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户模块</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+</head>
+<body>
+<div class="container" id="container">
+    <!--<button class="btn btn-success">添加授权</button>-->
+    <!--<table class="table table-hover">-->
+    <!--<tr>-->
+    <!--<th>id</th>-->
+    <!--<th>客户名</th>-->
+    <!--<th>授权码</th>-->
+    <!--<th>累计流量</th>-->
+    <!--<th>授权状态</th>-->
+    <!--<th>授权时间</th>-->
+    <!--<th>到期时间</th>-->
+    <!--<th>备注</th>-->
+    <!--<th>删除</th>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>1</td>-->
+    <!--<td>张三</td>-->
+    <!--<td>ddhaksak121</td>-->
+    <!--<td>1212 M</td>-->
+    <!--<td>已授权</td>-->
+    <!--<td>2020-02-18 12:12:09</td>-->
+    <!--<td>2021-02-18 12:12:09</td>-->
+    <!--<td>无</td>-->
+    <!--<td>-->
+    <!--<button class="btn btn-danger btn-xs">删除</button>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</table>-->
+
+    <!-- 添加授权弹出框（Modal） -->
+    <div class="modal" id="clientKeyModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clientKeyModalLabel">添加授权</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="username" class="col-form-label">客户名:</label>
+                            <input type="text" class="form-control" id="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="clientKey" class="col-form-label">授权码:</label>
+                            <input type="text" class="form-control" id="clientKey">
+                        </div>
+                        <div class="form-group">
+                            <label for="stopTime" class="col-form-label">有效期(天):</label>
+                            <input type="text" class="form-control" id="stopTime">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment" class="col-form-label">备注:</label>
+                            <input type="text" class="form-control" id="comment">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancel">关闭</button>
+                    <button type="button" class="btn btn-primary" id="submit">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+
+<script type="application/javascript" rel="script" src="/js/client.js"></script>
+</html>

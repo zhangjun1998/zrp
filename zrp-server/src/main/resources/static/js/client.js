@@ -1,85 +1,11 @@
-<!--
-@Description 
-@Author zhangjun
-@Data 2020/4/13
-@Time 17:08
--->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>用户模块</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-</head>
-<body>
-<div class="container" id="container">
-    <!--<button class="btn btn-success">添加授权</button>-->
-    <!--<table class="table table-hover">-->
-    <!--<tr>-->
-    <!--<th>id</th>-->
-    <!--<th>客户名</th>-->
-    <!--<th>授权码</th>-->
-    <!--<th>累计流量</th>-->
-    <!--<th>授权状态</th>-->
-    <!--<th>授权时间</th>-->
-    <!--<th>到期时间</th>-->
-    <!--<th>备注</th>-->
-    <!--<th>删除</th>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td>1</td>-->
-    <!--<td>张三</td>-->
-    <!--<td>ddhaksak121</td>-->
-    <!--<td>1212 M</td>-->
-    <!--<td>已授权</td>-->
-    <!--<td>2020-02-18 12:12:09</td>-->
-    <!--<td>2021-02-18 12:12:09</td>-->
-    <!--<td>无</td>-->
-    <!--<td>-->
-    <!--<button class="btn btn-danger btn-xs">删除</button>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</table>-->
+/**
+ * @Description
+ * @Author zhangjun
+ * @Data 2020/7/24
+ * @Time 17:05
+ * */
 
-    <!-- 添加授权弹出框（Modal） -->
-    <div class="modal" id="clientKeyModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="clientKeyModalLabel">添加授权</h5>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="username" class="col-form-label">客户名:</label>
-                            <input type="text" class="form-control" id="username">
-                        </div>
-                        <div class="form-group">
-                            <label for="clientKey" class="col-form-label">授权码:</label>
-                            <input type="text" class="form-control" id="clientKey">
-                        </div>
-                        <div class="form-group">
-                            <label for="stopTime" class="col-form-label">有效期(天):</label>
-                            <input type="text" class="form-control" id="stopTime">
-                        </div>
-                        <div class="form-group">
-                            <label for="comment" class="col-form-label">备注:</label>
-                            <input type="text" class="form-control" id="comment">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="cancel">关闭</button>
-                    <button type="button" class="btn btn-primary" id="submit">添加</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-</body>
-<script>
+window.onload=function () {
 
     //格式化日期，是否补0
     function formatNumber(value){
@@ -108,7 +34,7 @@
 
     function getClients() {
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://localhost:8888/api/client/get", true);
+        xhr.open("GET", "/api/client/get", true);
         xhr.send();
         xhr.onreadystatechange = function (ev) {
             if (xhr.readyState === 4 && xhr.status === 200) {
@@ -229,7 +155,7 @@
     function deleteClient(e) {
         var clientId = e.currentTarget.getAttribute("clientid");
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://localhost:8888/api/client/delete?clientId=" + clientId, true);
+        xhr.open("GET", "/api/client/delete?clientId=" + clientId, true);
         xhr.send();
         xhr.onreadystatechange = function (ev) {
             if (xhr.readyState === 4 && xhr.status === 200) {
@@ -271,7 +197,7 @@
             };
             var clientJson = JSON.stringify(client);
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "http://localhost:8888/api/client/add", true);
+            xhr.open("POST", "/api/client/add", true);
             xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
             xhr.send(clientJson);
             xhr.onreadystatechange = function (ev) {
@@ -299,5 +225,4 @@
 
     bindAddClient();
 
-</script>
-</html>
+}

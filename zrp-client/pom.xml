@@ -84,6 +84,7 @@
         </plugin>
 
         <!--打包命令：mvn assembly:assembly-->
+        <!--  否则运行时提示找不到清单属性 -->
       </plugins>
     </pluginManagement>
   </build>

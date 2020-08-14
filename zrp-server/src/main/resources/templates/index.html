@@ -1,0 +1,45 @@
+<!--
+@Description 
+@Author zhangjun
+@Data 2020/4/13
+@Time 17:01
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="/css/index.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <span class="navbar-brand">ZRP</span>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="changePage" id="client">
+                        <a href="#">用户模块</a>
+                    </li>
+                    <li class="changePage" id="log">
+                        <a href="#">日志模块</a>
+                    </li>
+                    <li class="active changePage" id="admin">
+                        <a href="#">管理模块</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="iframeContainer">
+        <iframe id="pageChoice" frameborder="0" scrolling="yes" src="login"></iframe>
+    </div>
+</div>
+
+</body>
+
+<script type="application/javascript" rel="script" src="/js/index.js"></script>
+</html>
