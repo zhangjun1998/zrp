@@ -5,7 +5,7 @@
 ![](https://img.shields.io/badge/Java-1.8-green.svg)
 ![](https://img.shields.io/badge/zrp-0.0.2-yellow.svg)
 
-zrp 是使用Java开发的一款基于netty的内网穿透工具，主要用于将内网服务反向代理到公网访问。目前支持所有TCP上层协议的代理，包括但不限于HTTP、SSH、FTP、TELNET、SMTP、POP3、DNS等。
+zrp 是使用Java开发的一款基于Netty的内网穿透工具，主要用于将内网服务反向代理到公网访问。目前支持所有TCP上层协议的代理，包括但不限于HTTP、SSH、FTP、TELNET、SMTP、POP3、DNS等。
 
 ## 目录
 
