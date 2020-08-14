@@ -72,9 +72,7 @@ server-host: 0.0.0.0
 server-port: 10987
 ```
 
-2. 初始化数据库
-
-[下载sql]("")
+2. 初始化数据库：[zrp.sql]("")
 
 3. 代理客户端配置文件：[zrp-client.yaml](https://github.com/zhangjun1998/zrp/blob/master/zrp-client.yaml)
 ```
