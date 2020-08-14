@@ -62,7 +62,6 @@ zrp 是使用Java开发的一款基于netty的内网穿透工具，主要用于�
 ### 配置
 
 1. 代理服务器配置文件：[zrp-server.yaml](https://github.com/zhangjun1998/zrp/blob/master/zrp-server.yaml)
-<a href="https://github.com/zhangjun1998/zrp/blob/master/zrp-server.yaml">下载zrp-server.yaml</a>
 ```
 # 代理服务器配置
 
