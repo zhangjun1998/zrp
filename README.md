@@ -72,7 +72,7 @@ server-host: 0.0.0.0
 server-port: 10987
 ```
 
-2. 初始化数据库：[zrp.sql]("")
+2. 初始化数据库：[zrp.sql](https://github.com/zhangjun1998/zrp/blob/master/zrp.sql)
 
 3. 代理客户端配置文件：[zrp-client.yaml](https://github.com/zhangjun1998/zrp/blob/master/zrp-client.yaml)
 ```
@@ -137,7 +137,7 @@ java -jar zrp-client.jar
 ### 自测截图
 1. 连接内网数据库
 
-![内网数据库连接演示](https://github.com/zhangjun1998/zrp/blob/master/images/mysql.png)
+![内网数据库连接演示](https://github.com/zhangjun1998/zrp/raw/master/images/mysql.png)
 
 2. ssh连接内网计算机
 
