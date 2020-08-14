@@ -59,6 +59,8 @@ zrp 是使用Java开发的一款基于netty的内网穿透工具，主要用于�
 1. 代理服务器端zrp-server：根据源码自行打包
 2. 代理客户端zrp-client下载：[zrp-client](https://github.com/zhangjun1998/zrp/releases/download/0.0.2/zrp-client.jar)
 
+**如果你有授权码可以连接某台公网服务器，那么你只需要下载zrp-client并完善配置文件即可实现内网穿透。**
+
 ### 配置
 
 1. 代理服务器配置文件：[zrp-server.yaml](https://github.com/zhangjun1998/zrp/blob/master/zrp-server.yaml)
