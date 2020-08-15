@@ -1,6 +1,6 @@
 # zrp
 
-![Hex.pm](https://img.shields.io/hexpm/l/ok)
+![License](https://img.shields.io/hexpm/l/ok)
 ![Maven Central](https://img.shields.io/badge/maven-3.6.0-blue.svg)
 ![](https://img.shields.io/badge/Java-1.8-green.svg)
 ![](https://img.shields.io/badge/zrp-0.0.2-yellow.svg)
