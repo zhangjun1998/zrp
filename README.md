@@ -148,14 +148,14 @@ java -jar zrp-client.jar
 ## 计划
 
 - [x] 管理员仪表盘，在线管理代理客户端
+- [ ] 使用消息队列优化日志存储流程
 - [ ] 数据压缩，节约带宽，但会增大CPU负载
 - [ ] 端口复用，允许不同协议使用同一端口
-- [ ] TCP多路复用，减少TCP连接数
 
 ## 联系我
 
 + 邮箱：zhangjun_java@163.com
-+ 微信：rzy_zj
++ 微信：rzy_zj(备注github->zrp)
 + Github提issue
 
 ## 致谢
