@@ -23,6 +23,7 @@ public class ProxyMessageDecoder extends MessageToMessageDecoder<ByteBuf> {
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
+
         int type = byteBuf.readInt();
 
         int metaDataLength = byteBuf.readInt();

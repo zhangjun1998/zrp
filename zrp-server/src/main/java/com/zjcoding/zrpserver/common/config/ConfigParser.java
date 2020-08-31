@@ -25,23 +25,46 @@ public class ConfigParser {
 
     public ConfigParser() {
         try {
-            InputStream in;
-
-            //在IDE启动获取配置文件
-            //File file = ResourceUtils.getFile("classpath:config/zrp-server.yaml");
-            //in = new FileInputStream(file);
-
-            // 获取外部配置文件
-            String dir = System.getProperty("user.dir");
-            File file = new File(dir+File.separator+"zrp-server.yaml");
-            in = new FileInputStream(file);
+            //IDEA中运行
+            File file = getProjectConfigFile();
+            //打包到服务器
+            //File file = getServerConfigFile();
+            InputStream in = new FileInputStream(file);
 
             Yaml yaml = new Yaml();
             config = (Map<String,Object>) yaml.load(in);
             portArr = (ArrayList<Map<String, Object>>) get("config");
-        }catch (IOException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 在IDE启动获取配置文件
+     * @Description
+     * @Author ZhangJun
+     * @Date 13:28 2020/8/29
+     * @Param
+     * @return
+     */
+    public File getProjectConfigFile() throws Exception{
+        return ResourceUtils.getFile("classpath:config/zrp-server.yaml");
+    }
+
+
+    /**
+     * 服务器中启动获取配置文件
+     * @Description
+     * @Author ZhangJun
+     * @Date 13:31 2020/8/29
+     * @Param
+     * @return
+     */
+    public File getServerConfigFile()
+    {
+        String classPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+        classPath = classPath.substring(5,classPath.indexOf("zrp-server.jar"))+"zrp-server.yaml";
+        return new File(classPath);
     }
 
     public static Object get(String key){

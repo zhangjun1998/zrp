@@ -4,4 +4,4 @@
 server-host: 0.0.0.0
 
 # 代理服务器数据传输port
-server-port: 9876
+server-port: 9879

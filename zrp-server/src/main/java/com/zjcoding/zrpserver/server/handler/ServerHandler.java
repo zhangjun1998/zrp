@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description 处理服务器接收到的客户端连接
@@ -36,7 +37,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     @Autowired
     private LogService logService;
 
-//    // 防止clientService注入失败
+    // 防止clientService注入失败
     private static ServerHandler serverHandler;
 
     @PostConstruct
@@ -47,7 +48,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     //在所有ServerHandler中共享当前在线的授权信息
-    private static ArrayList<String> clients = new ArrayList<>();
+    private static Map<String,Integer> clients = new HashMap<>();
 
     //统一管理客户端channel和remote channel
     private static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
@@ -80,6 +81,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     //数据读取与转发
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+
         ProxyMessage message = (ProxyMessage) msg;
         if (message.getType() == ProxyMessage.TYPE_REGISTER){
             //处理客户端注册请求
@@ -97,6 +99,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 case ProxyMessage.TYPE_DATA :
                     processData(message);
                     break;
+                default:
+                    System.out.printf("非法请求");
             }
         }else {
             System.out.println(this.getClass()+"\r\n 有未授权的客户端尝试发送消息，断开连接");
@@ -135,17 +139,29 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      **/
     public synchronized boolean isLegal(String clientKey){
         boolean flag = serverHandler.clientService.checkClientKey(clientKey);
-//        boolean flag = serverHandler.clientService.checkClientKey(clientKey);
         if (flag){
             //一个client-key只允许一个代理客户端使用
-            for (String client : clients){
-                if (client.equals(clientKey)){
-                    System.out.println(this.getClass()+"\r\n同一授权不允许重复登录");
-                    return false;
-                }
+            if (isExist(clientKey)){
+                System.out.println("不允许同一授权码重复登录\n");
+                return false;
             }
-            clients.add(clientKey);
+            clients.put(clientKey,1);
             this.clientKey = clientKey;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 判断授权码是否已存在连接
+     * @Description
+     * @Author ZhangJun
+     * @Date 9:26 2020/8/31
+     * @Param
+     * @return
+     */
+    public boolean isExist(String clientKey){
+        if (clients.get(clientKey)!=null){
             return true;
         }
         return false;
@@ -233,7 +249,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @return void
      **/
     public void processData(ProxyMessage message){
-        if (message.getData()==null || message.getData().length<=0){
+        if (message.getData()==null || message.getData().length<=0
+                || !isExist(message.getMetaData().get("clientKey").toString())
+        ){
             return;
         }
         //根据channelId转发到channelGroup上注册的相应remote channel(外部请求)

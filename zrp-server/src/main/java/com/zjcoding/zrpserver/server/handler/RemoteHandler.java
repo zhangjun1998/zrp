@@ -79,7 +79,7 @@ public class RemoteHandler extends ChannelInboundHandlerAdapter {
      * @Param [type, channelId]
      * @return void
      **/
-    public void send(int type,String channelId,byte[] data){
+    public void send(int type,String channelId,byte[] data) {
         if (serverHandler==null){
             System.out.println(this.getClass()+"\r\n 客户端channel不存在");
             return;

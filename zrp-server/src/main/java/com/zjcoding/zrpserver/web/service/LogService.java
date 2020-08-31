@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @Description
- * @Author zhangjun
+ * @Description 日志服务
+ * @Author ZhangJun
  * @Data 2020/4/15
  * @Time 17:24
  */
