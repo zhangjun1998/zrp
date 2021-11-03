@@ -172,7 +172,7 @@ java -jar zrp-client.jar
 ## 联系我
 
 + 邮箱：zhangjun_java@163.com
-+ 微信：rzy_zj(备注github->zrp)
++ 微信：rzy-zj(备注github->zrp)
 + Github提issue
 
 ## 致谢
